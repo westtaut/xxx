@@ -2,16 +2,108 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="A static frontend starter ready for Vercel deployment." />
-    <title>Static Frontend Starter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Money Leak Analyzer for Telegram Mini Apps. Detect overspending, emotional triggers, and hidden monthly loss in seconds."
+    />
+    <title>Money Leak Analyzer</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Static Frontend Starter</h1>
-      <p id="status">Loading…</p>
-      <button id="action-btn" type="button">Click me</button>
+    <main class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">Telegram Mini App</p>
+        <h1>Money Leak Analyzer</h1>
+        <p class="subtitle">Find where your money disappears and hit it where it hurts.</p>
+      </header>
+
+      <section id="input-screen" class="screen active" aria-label="Input screen">
+        <form id="analyzer-form" class="card" novalidate>
+          <label class="field" for="income">
+            <span>Monthly income (€)</span>
+            <input id="income" name="income" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 3200" required />
+          </label>
+
+          <label class="field" for="expenses">
+            <div class="field-head">
+              <span>Estimated monthly expenses (€)</span>
+              <output id="expense-output" for="expenses">1600</output>
+            </div>
+            <input id="expenses" name="expenses" type="range" min="0" max="12000" step="50" value="1600" />
+          </label>
+
+          <label class="field" for="custom-expenses">
+            <span>Or type exact expenses (€)</span>
+            <input
+              id="custom-expenses"
+              name="customExpenses"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              placeholder="Optional override"
+            />
+          </label>
+
+          <label class="field" for="categories">
+            <span>Optional categories (comma-separated)</span>
+            <textarea
+              id="categories"
+              name="categories"
+              rows="3"
+              placeholder="Coffee, food delivery, subscriptions, shopping"
+            ></textarea>
+          </label>
+
+          <p id="form-error" class="form-error" role="alert" aria-live="polite"></p>
+
+          <button type="submit" class="btn primary">Analyze my leaks</button>
+        </form>
+      </section>
+
+      <section id="result-screen" class="screen" aria-label="Result screen" hidden>
+        <article class="card result-card">
+          <p class="result-tag">Leak detected</p>
+          <h2 id="loss-headline">You are losing €0 per month.</h2>
+          <p id="overspending-pattern" class="pattern-copy"></p>
+
+          <div class="result-grid">
+            <div>
+              <p class="label">Yearly loss</p>
+              <p id="yearly-loss" class="value">€0</p>
+            </div>
+            <div>
+              <p class="label">Leak severity</p>
+              <p id="leak-severity" class="value">Low</p>
+            </div>
+          </div>
+
+          <section aria-labelledby="leaks-title">
+            <h3 id="leaks-title">Biggest money leaks</h3>
+            <ol id="leak-list" class="leak-list"></ol>
+          </section>
+
+          <section aria-labelledby="emotion-title" class="emotional-block">
+            <h3 id="emotion-title">Emotional insight</h3>
+            <p id="emotional-insight"></p>
+          </section>
+
+          <section class="paywall" aria-labelledby="paywall-title">
+            <h3 id="paywall-title">Unlock your 30-day Recovery Plan</h3>
+            <p>
+              Keep leaking or stop the bleed now. Get your personalized cut list, weekly challenge, and impulse-control script before next month hits.
+            </p>
+            <p class="price">Today only: <strong>€3.99</strong></p>
+            <button type="button" class="btn paywall-btn" aria-disabled="true">
+              Unlock full plan — blocked
+            </button>
+            <small>Secure checkout placeholder (frontend only)</small>
+          </section>
+
+          <button id="reset-btn" type="button" class="btn ghost">Run another analysis</button>
+        </article>
+      </section>
     </main>
 
     <script src="app.js" defer></script>
